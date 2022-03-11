@@ -100,20 +100,19 @@ do
 		FAIL=$((FAIL+1))
 		#TERMINAL OUTPUT
 		printf "${REDB}${BHYEL}MAP: %-42s${RESET}%s${BRED}[DESTROYED]\n${RESET}" $file
-		printf "${REDB}${BWHT}%.21s${REDB}${BHYEL} FILE CONTENTS ${REDB}${BWHT}%.21s${RESET}\n" $div1 $div1
-		cat $file
-		printf "\n${BYEL}%.21s${REDB}${BHYEL} PARSER OUTPUT ${RESET}${BYEL}%.21s${RESET}\n" $div1 $div1
-		cat $out
-		if [ $RET -eq 139 ]; then
-			echo "[139] Segmentation fault"
-			echo "[139] Segmentation fault" >> $log
-		fi
+		# printf "${REDB}${BWHT}%.21s${REDB}${BHYEL} FILE CONTENTS ${REDB}${BWHT}%.21s${RESET}\n" $div1 $div1
+		# cat $file
+		# printf "\n${BYEL}%.21s${REDB}${BHYEL} PARSER OUTPUT ${RESET}${BYEL}%.21s${RESET}\n" $div1 $div1
+		# cat $out
+		# if [ $RET -eq 139 ]; then
+			# echo "[139] Segmentation fault"
+			# echo "[139] Segmentation fault" >> $log
+		# fi
 		#LOGFILE OUTPUT
 		printf "\n\n%.21s[DESTROYED STUFF #%2.d]%.21s\n" $div1 $FAIL $div1 >> $log && ls $file >> $log && cat $file >> $log
 		printf "\n\nPARSER OUTPUT:\n" >> $log
 		cat $out >> $log
-		printf "${REDB}${BWHT}%.21s${YELHB}${BRED} CONTINUE TEST ${REDB}${BWHT}%.21s${RESET}\n" $div1 $div1
-		echo
+		# printf "${REDB}${BWHT}%.21s${YELHB}${BRED} CONTINUE TEST ${REDB}${BWHT}%.21s${RESET}\n" $div1 $div1
 	else
 		OK=$((OK+1))
 		ARG_TEST_MAP=$file
@@ -123,40 +122,39 @@ do
 done
 
 # #ITERATE THROUGH VALID MAPS
-# printf "\n${BYEL}+%.20s${REDB} ${BHWHT}TEST VALID MAPS ${RESET}${BYEL}%.20s+\n${RESET}" $div1 $div1
-# for file in valid_maps/*.cub
-# do
-# 	../cub3D $file &>$out &
-# 	sleep 0.3
-# 	kill $! &>/dev/null
-# 	wait $! &>/dev/null
-# 	RET=$?
-# 	grep -q "Error$" $out
-# 	if [[ $? -eq 0 || $RET -eq 139 ]]; then
-# 		FAIL=$((FAIL+1))
-# 		#TERMINAL OUTPUT
-# 		printf "${REDB}${BHYEL}MAP: %-42s${RESET}%s${BRED}[DESTROYED]\n${RESET}" $file
-# 		printf "${REDB}${BWHT}%.21s${REDB}${BHYEL} FILE CONTENTS ${REDB}${BWHT}%.21s${RESET}\n" $div1 $div1
-# 		cat $file
-# 		printf "\n${BYEL}%.21s${REDB}${BHYEL} PARSER OUTPUT ${RESET}${BYEL}%.21s${RESET}\n" $div1 $div1
-# 		cat $out
-# 		if [[ $RET -eq 139 ]]; then
-# 			echo "[139] Segmentation fault"
-# 			echo "[139] Segmentation fault" >> $log
-# 		fi
-# 		#LOGFILE OUTPUT
-# 		printf "\n\n%.21s[DESTROYED STUFF #%2.d]%.21s\n" $div1 $FAIL $div1 >> $log && ls $file >> $log && cat $file >> $log
-# 		printf "\n\nPARSER OUTPUT:\n" >> $log
-# 		cat $out >> $log
-# 		printf "${REDB}${BWHT}%.21s${YELHB}${BRED} CONTINUE TEST ${REDB}${BWHT}%.21s${RESET}\n" $div1 $div1
-# 		echo
-# 	else
-# 		OK=$((OK+1))
-# 		ARG_TEST_MAP=$file
-# 		printf "${REDB}${BHYEL}MAP:${RESET}${BWHT} %-42s${RESET}%s${BGRN}[OK]\n" $file
-# 	fi
-# 	rm -f $out
-# done
+printf "\n${BYEL}+%.20s${REDB} ${BHWHT}TEST VALID MAPS ${RESET}${BYEL}%.20s+\n${RESET}" $div1 $div1
+for file in valid_maps/*.cub
+do
+	../cub3D $file &>$out &
+	sleep 0.3
+	kill $! &>/dev/null
+	wait $! &>/dev/null
+	RET=$?
+	grep -q "Error$" $out
+	if [[ $? -eq 0 || $RET -eq 139 ]]; then
+		FAIL=$((FAIL+1))
+		#TERMINAL OUTPUT
+		printf "${REDB}${BHYEL}MAP: %-42s${RESET}%s${BRED}[DESTROYED]\n${RESET}" $file
+		# printf "${REDB}${BWHT}%.21s${REDB}${BHYEL} FILE CONTENTS ${REDB}${BWHT}%.21s${RESET}\n" $div1 $div1
+		# cat $file
+		# printf "\n${BYEL}%.21s${REDB}${BHYEL} PARSER OUTPUT ${RESET}${BYEL}%.21s${RESET}\n" $div1 $div1
+		# cat $out
+		# if [[ $RET -eq 139 ]]; then
+			# echo "[139] Segmentation fault"
+			# echo "[139] Segmentation fault" >> $log
+		# fi
+		#LOGFILE OUTPUT
+		printf "\n\n%.21s[DESTROYED STUFF #%2.d]%.21s\n" $div1 $FAIL $div1 >> $log && ls $file >> $log && cat $file >> $log
+		printf "\n\nPARSER OUTPUT:\n" >> $log
+		cat $out >> $log
+		# printf "${REDB}${BWHT}%.21s${YELHB}${BRED} CONTINUE TEST ${REDB}${BWHT}%.21s${RESET}\n" $div1 $div1
+	else
+		OK=$((OK+1))
+		ARG_TEST_MAP=$file
+		printf "${REDB}${BHYEL}MAP:${RESET}${BWHT} %-42s${RESET}%s${BGRN}[OK]\n" $file
+	fi
+	rm -f $out
+done
 
 #OUTPUT FINAL RESULT
 printf "\n\n${BBLU}%.21s${BWHT} FINAL RESULT ${BBLU}%.21s\n\n" $div1 $div1
